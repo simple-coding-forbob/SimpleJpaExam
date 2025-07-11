@@ -2,9 +2,11 @@ package com.simplecoding.jpaexam.emp.repository;
 
 import com.simplecoding.jpaexam.emp.dto.EmpStatsDto;
 import com.simplecoding.jpaexam.emp.entity.Emp;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -31,4 +33,11 @@ public interface EmpRepository extends JpaRepository<Emp,Integer> {
             @Param("searchKeyword") String searchKeyword,
             Pageable pageable
     );
+
+    //    TODO: 4) bulk sql: delete 직접 하기(db에 바로 반영)
+//       delete 문 1개만 실행됩니다.
+    @Transactional
+    @Modifying
+    @Query(value = "delete Emp where eno=:eno")
+    void bulkDelete(@Param("eno") int eno);
 }

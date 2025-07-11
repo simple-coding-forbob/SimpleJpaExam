@@ -68,21 +68,25 @@ public class EmpService {
     }
 
 //    TODO: 2) JPA 에서 SQL 직접 작성하기: SQL 과 비슷한 JPQL 로 작성합니다.
-//          (1)
+//    TODO: (1)
+    public Page<EmpDto> selectSalary(int salary, Pageable pageable) {
+        Page<Emp>  page= empRepository.selectSalary(salary, pageable);
+        return page.map(emp -> mapStruct.toDto(emp));
+    }
+    //  TODO: (2)
+    public EmpStatsDto selectGroup() {
+        return empRepository.selectGroup();
+    }
+    //  TODO: (3)
     public Page<EmpDto> selectAll(String searchKeyword, Pageable pageable) {
         Page<Emp>  page= empRepository.selectAll(searchKeyword, pageable);
         return page.map(emp -> mapStruct.toDto(emp));
     }
 
-//    TODO: (2)
-    public Page<EmpDto> selectSalary(int salary, Pageable pageable) {
-        Page<Emp>  page= empRepository.selectSalary(salary, pageable);
-        return page.map(emp -> mapStruct.toDto(emp));
+    //    TODO: (4)
+    public void bulkDelete(int eno) {
+        empRepository.bulkDelete(eno);
     }
 
-    //  TODO: (3)
-    public EmpStatsDto selectGroup() {
-        return empRepository.selectGroup();
-    }
 }
 

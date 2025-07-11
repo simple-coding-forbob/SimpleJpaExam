@@ -78,16 +78,6 @@ class DeptServiceTest {
         deptService.deleteById(40);
     }
 
-    @Test
-    void testSelectAll() {
-//        1) 테스트 조건(given):
-        String searchKeyword="ACCOUNTING";
-        Pageable pageable = PageRequest.of(0,3);
-//        2) 실제 메소드실행(when):
-        Page<DeptDto> page = deptService.selectAll(searchKeyword, pageable);
-//        3) 검증(then): 로그 , DB 확인, assert~ (DB확인)
-        log.info("테스트 : "+page.getContent());  // page 클래스의 content 에 dept 객체가 있습니다.
-    }
 
     @Test
     void selectByDnameAndLoc() {
@@ -105,5 +95,25 @@ class DeptServiceTest {
     void selectByGroupFunc() {
         DeptStatsDto deptStatsDto = deptService.selectGroup();
         log.info(deptStatsDto);
+    }
+
+    @Test
+    void testSelectAll() {
+//        1) 테스트 조건(given):
+        String searchKeyword="ACCOUNTING";
+        Pageable pageable = PageRequest.of(0,3);
+//        2) 실제 메소드실행(when):
+        Page<DeptDto> page = deptService.selectAll(searchKeyword, pageable);
+//        3) 검증(then): 로그 , DB 확인, assert~ (DB확인)
+        log.info("테스트 : "+page.getContent());  // page 클래스의 content 에 dept 객체가 있습니다.
+    }
+
+    @Test
+    void bulkDelete() {
+//		1) 테스트 조건(given)
+        int dno=220;
+//		2) 실제 메소드 실행(when)
+        deptService.bulkDelete(dno);
+//		3) 검증(then): 로그 , DB 확인, assert~ (DB확인)
     }
 }

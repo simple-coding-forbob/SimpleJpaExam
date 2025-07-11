@@ -52,9 +52,9 @@ public class DeptService {
         deptRepository.save(dept);
     }
 
-//        TODO: (4) 수정: 화면에서 전달된 null 값은 update 하지 않습니다. (dirty checking 기능 사용)
+//        TODO: (4) 수정: (dirty checking 기능 사용)
 //             dirty checking 기능: JPA 에서 save() 실행 없이 setter 로 엔티티 값을 수정하면 update 문이 실행됩니다.
-//             null 체크와 동일한 값은 빼고 다른 값만 수정됩니다.(성능 증가)
+//             수정할 값이 동일하면 update 문이 실행되지 않습니다.(성능 증가)
 //             mapStruct 라이브러리는 setter 를 자동으로 만들어주는 라이브러리이므로 dirty checking 기능이 작동합니다.
 //             사용법: 1) @Transactional 사용: 여러개의 SQL 문 사용시 그룹으로 묶어서 트랜잭션 시작 ~ 종료됩니다.
 //                    2) 먼저 엔티티 조회: JPA 에 현재 결과가 임시 저장됩니다.(캐싱)
@@ -75,21 +75,25 @@ public class DeptService {
     }
 
 //    TODO: 2) JPA 에서 SQL 직접 작성하기: SQL 과 비슷한 JPQL 로 작성합니다.
-//          (1)
+    //  TODO: (1)
+    public Page<DeptDto> selectByDnameAndLoc(String dname, String loc, Pageable pageable) {
+        Page<Dept> page= deptRepository.selectByDnameAndLoc(dname, loc, pageable);
+        return page.map(dept -> mapStruct.toDto(dept));
+    }
+    //  TODO: (2)
+    public DeptStatsDto selectGroup() {
+        return deptRepository.selectGroup();
+    }
+
+    //  TODO: (3)
     public Page<DeptDto> selectAll(String searchKeyword, Pageable pageable) {
         Page<Dept> page= deptRepository.selectAll(searchKeyword, pageable);
         return page.map(dept -> mapStruct.toDto(dept));
     }
 
-    //  TODO: (2)
-    public Page<DeptDto> selectByDnameAndLoc(String dname, String loc, Pageable pageable) {
-        Page<Dept> page= deptRepository.selectByDnameAndLoc(dname, loc, pageable);
-        return page.map(dept -> mapStruct.toDto(dept));
-    }
-
-    //  TODO: (3)
-    public DeptStatsDto selectGroup() {
-        return deptRepository.selectGroup();
+//    TODO: (4)
+    public void bulkDelete(int dno) {
+        deptRepository.bulkDelete(dno);
     }
 }
 

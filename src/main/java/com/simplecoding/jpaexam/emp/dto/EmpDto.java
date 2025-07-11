@@ -17,5 +17,5 @@ public class EmpDto {
     private LocalDate hiredate;         // 입사일 (화면에서 위와 같이 전달됨, 기본값 형태이므로 생략가능)
     private Integer salary;             // 급여
     private Integer commission;         // 보너스(상여금)
-    private Integer dno;                // 부모 엔티티 클래스명
+    private Integer dno;                // 부모 엔티티 부서번호(기본키), N+1 실행되지 않음(JPA가 기본키를 가지고 있음)
 }

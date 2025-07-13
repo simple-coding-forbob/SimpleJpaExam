@@ -13,7 +13,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DeptRepository extends JpaRepository<Dept,Integer> {
+public interface DeptRepository extends JpaRepository<Dept,Long> {
 
 //    TODO: 1) 부서 테이블에서 부서명(dname), 위치(loc)를 매개변수로 받아 조회
     @Query(value = "select d from Dept d\n" +
@@ -26,7 +26,7 @@ public interface DeptRepository extends JpaRepository<Dept,Integer> {
     );
 
 //    TODO: 2) 부서테이블의 부서번호를 sum, avg, max, min 값을 화면에 표시
-//       단, sum(Long), avg(Double), max(Integer), min(Integer)
+//       단, sum(Long), avg(Double), max(Long), min(Long)
     @Query(value = "select new com.simplecoding.jpaexam.dept.dto.DeptStatsDto(sum(d.dno),avg(d.dno),max(d.dno),min(d.dno))\n" +
             "from Dept d")
     DeptStatsDto selectGroup();
@@ -44,5 +44,5 @@ public interface DeptRepository extends JpaRepository<Dept,Integer> {
     @Transactional
     @Modifying
     @Query(value = "delete Dept where dno=:dno")
-    void bulkDelete(@Param("dno") int dno);
+    void bulkDelete(@Param("dno") long dno);
 }

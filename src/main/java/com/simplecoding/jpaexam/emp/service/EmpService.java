@@ -23,7 +23,7 @@ public class EmpService {
 
 //    TODO: 1) JPA 기본 메소드들: SQL 작성없이 자동으로 만들어서 실행됩니다.
 //    TODO: (1) 상세조회: findById(기본키)
-    public EmpDto findById(int eno) {
+    public EmpDto findById(long eno) {
 //        JPA 상세조회 함수 실행
         Emp emp= empRepository.findById(eno)
                 .orElseThrow(() -> new RuntimeException("정보를 저장할 수 없습니다."));
@@ -63,13 +63,13 @@ public class EmpService {
 
 //     TODO: (6) 삭제: deleteById(기본키)
 //                     삭제가 자동으로 SQL 작성되어 실행됩니다.
-    public void deleteById(int eno) {
+    public void deleteById(long eno) {
         empRepository.deleteById(eno);
     }
 
 //    TODO: 2) JPA 에서 SQL 직접 작성하기: SQL 과 비슷한 JPQL 로 작성합니다.
 //    TODO: (1)
-    public Page<EmpDto> selectSalary(int salary, Pageable pageable) {
+    public Page<EmpDto> selectSalary(long salary, Pageable pageable) {
         Page<Emp>  page= empRepository.selectSalary(salary, pageable);
         return page.map(emp -> mapStruct.toDto(emp));
     }
@@ -84,7 +84,7 @@ public class EmpService {
     }
 
     //    TODO: (4)
-    public void bulkDelete(int eno) {
+    public void bulkDelete(long eno) {
         empRepository.bulkDelete(eno);
     }
 

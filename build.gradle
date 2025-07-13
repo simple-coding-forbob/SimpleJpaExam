@@ -47,30 +47,12 @@ dependencies {
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
-	// TODO: QueryDSL 추가
-	implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
-	annotationProcessor 'com.querydsl:querydsl-apt:5.1.0:jakarta'
-	implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
-	annotationProcessor 'jakarta.persistence:jakarta.persistence-api:3.1.0'
-	annotationProcessor 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+	// TODO: querydsl jakarta 의존성 추가
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor 'com.querydsl:querydsl-apt:5.0.0:jakarta'
+	annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+	annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
 }
-
-
-// TODO: QueryDSL 폴더 설정 시작
-def querydslDir = layout.buildDirectory.dir("generated/querydsl").get().asFile
-sourceSets {
-	main {
-		java {
-			srcDirs += querydslDir
-		}
-	}
-}
-tasks.withType(JavaCompile).configureEach {
-	options.annotationProcessorGeneratedSourcesDirectory = querydslDir
-}
-// TODO: QueryDSL 폴더 설정 끝
-
-
 
 tasks.named('test') {
 	useJUnitPlatform()

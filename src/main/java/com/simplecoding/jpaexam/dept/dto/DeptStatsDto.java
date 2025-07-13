@@ -10,6 +10,6 @@ import lombok.*;
 public class DeptStatsDto {
     private Long sum;
     private Double avg;
-    private Integer max;
-    private Integer min;
+    private Long max;
+    private Long min;
 }

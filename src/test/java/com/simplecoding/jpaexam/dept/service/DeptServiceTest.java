@@ -24,7 +24,7 @@ class DeptServiceTest {
     @Test
     void findById() {
 //		1) 테스트 조건(given)
-        int dno=20;
+        long dno=20;
 //		2) 실제 메소드실행(when)
         DeptDto deptDto=deptService.findById(dno);
 //		3) 검증(then): 로그 , DB 확인, assert~ (DB확인)
@@ -55,7 +55,7 @@ class DeptServiceTest {
     @Test
     void update() {
         DeptDto deptDto=new DeptDto();
-        deptDto.setDno(20);
+        deptDto.setDno((long)20);
         deptDto.setDname("영업부");
         deptDto.setLoc("부산");
         deptService.save(deptDto);
@@ -65,7 +65,7 @@ class DeptServiceTest {
     void update2() {
 //		1) 테스트 조건(given)
         DeptDto deptDto=new DeptDto();
-        deptDto.setDno(20);
+        deptDto.setDno((long)20);
         deptDto.setDname("개발부");
         deptDto.setLoc("부산");
 //		2) 실제 메소드실행(when)
@@ -111,9 +111,39 @@ class DeptServiceTest {
     @Test
     void bulkDelete() {
 //		1) 테스트 조건(given)
-        int dno=220;
+        long dno=220;
 //		2) 실제 메소드 실행(when)
         deptService.bulkDelete(dno);
 //		3) 검증(then): 로그 , DB 확인, assert~ (DB확인)
+    }
+
+    @Test
+    void queryByDnameAndLoc() {
+        //        1) 테스트 조건(given):
+        String dname="SALES";
+        String loc="CHICAGO";
+        Pageable pageable = PageRequest.of(0,3);
+//        2) 실제 메소드실행(when):
+        Page<DeptDto> page = deptService.selectByDnameAndLoc(dname, loc, pageable);
+//        3) 검증(then): 로그 , DB 확인, assert~ (DB확인)
+        log.info("테스트 : "+page.getContent());  // page 클래스의 content 에 dept 객체가 있습니다.
+    }
+
+    @Test
+    void queryGroup() {
+        DeptStatsDto deptStatsDto = deptService.queryGroup();
+        log.info(deptStatsDto);
+    }
+
+    @Test
+    void queryByDnameOrLoc() {
+//        1) 테스트 조건(given):
+        String dname="";
+        String loc="CHICAGO";
+        Pageable pageable = PageRequest.of(0,3);
+//        2) 실제 메소드실행(when):
+        Page<DeptDto> page = deptService.queryByDnameOrLoc(dname, loc, pageable);
+//        3) 검증(then): 로그 , DB 확인, assert~ (DB확인)
+        log.info("테스트 : "+page.getContent());  // page 클래스의 content 에 dept 객체가 있습니다.
     }
 }

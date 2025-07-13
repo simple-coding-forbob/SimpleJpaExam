@@ -15,8 +15,10 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface MapStruct {
     // TODO: 1) Emp <-> EmpDto
     @Mapping(source = "dept.dno", target = "dno")
+    @Mapping(source = "dept.dname", target = "dname")
     EmpDto toDto(Emp emp);
     @Mapping(source = "dno", target = "dept.dno")
+    @Mapping(source = "dname", target = "dept.dname")
     Emp toEntity(EmpDto empDto);
     // TODO: 수정 시 사용: dirty checking 기능(save() 없이 수정 가능)
     void updateFromDto(DeptDto deptDto, @MappingTarget Dept dept);

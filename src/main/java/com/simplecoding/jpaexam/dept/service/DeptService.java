@@ -5,6 +5,7 @@ import com.simplecoding.jpaexam.dept.dto.DeptDto;
 import com.simplecoding.jpaexam.dept.dto.DeptStatsDto;
 import com.simplecoding.jpaexam.dept.entity.Dept;
 import com.simplecoding.jpaexam.dept.repository.DeptRepository;
+import com.simplecoding.jpaexam.dept.repository.DeptRepositoryDsl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,9 +22,12 @@ public class DeptService {
     private final DeptRepository deptRepository;
     private final MapStruct mapStruct;
 
+//    (참고) DeptRepositoryDsl 가져오기
+    private final DeptRepositoryDsl deptRepositoryDsl;
+
 //    TODO: 1) JPA 기본 메소드들: SQL 작성없이 자동으로 만들어서 실행됩니다.
 //    TODO: (1) 상세조회: findById(기본키)
-    public DeptDto findById(int dno) {
+    public DeptDto findById(long dno) {
 //        JPA 상세조회 함수 실행
         Dept dept=deptRepository.findById(dno)
                                 .orElseThrow(() -> new RuntimeException("정보를 찾을 수 없습니다."));
@@ -68,9 +72,9 @@ public class DeptService {
         mapStruct.updateFromDto(deptDto, dept);
 //        deptRepository.save(dept);     // dirty checking 으로 인해 필요없음
     }
-    //     TODO: (6) 삭제: deleteById(기본키)
+    //     TODO: (6) 삭제: deleteById(기본키)0
 //                     삭제가 자동으로 SQL 작성되어 실행됩니다.
-    public void deleteById(int dno) {
+    public void deleteById(long dno) {
         deptRepository.deleteById(dno);
     }
 
@@ -92,8 +96,26 @@ public class DeptService {
     }
 
 //    TODO: (4)
-    public void bulkDelete(int dno) {
+    public void bulkDelete(long dno) {
         deptRepository.bulkDelete(dno);
     }
+
+//    TODO: 3) queryDsl 에서 SQL 직접 작성하기:
+//  TODO: (1)
+    public Page<DeptDto> queryByDnameAndLoc(String dname, String loc, Pageable pageable) {
+        Page<Dept> page= deptRepositoryDsl.queryByDnameAndLoc(dname, loc, pageable);
+        return page.map(dept -> mapStruct.toDto(dept));
+    }
+
+    //  TODO: (2)
+    public DeptStatsDto queryGroup() {
+        return deptRepositoryDsl.queryGroup();
+    }
+
+//    TODO: (3)
+public Page<DeptDto> queryByDnameOrLoc(String dname, String loc, Pageable pageable) {
+    Page<Dept> page= deptRepositoryDsl.queryByDnameOrLoc(dname, loc, pageable);
+    return page.map(dept -> mapStruct.toDto(dept));
+}
 }
 

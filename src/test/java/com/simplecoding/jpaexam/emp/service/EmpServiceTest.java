@@ -54,11 +54,11 @@ class EmpServiceTest {
         EmpDto empDto=new EmpDto();
         empDto.setEname("홍길동");
         empDto.setJob("부장");
-        empDto.setManager(8000);
+        empDto.setManager((long)8000);
         empDto.setHiredate(now);
-        empDto.setSalary(5000);
-        empDto.setCommission(1000);
-        empDto.setDno(10);
+        empDto.setSalary((long)5000);
+        empDto.setCommission((long)1000);
+        empDto.setDno((long)10);
 //		2) 실제 메소드실행
         empService.save(empDto);
 //		3) 검증(확인): 로그 , DB 확인, assert~ (DB확인)
@@ -70,14 +70,14 @@ class EmpServiceTest {
 //		1) 테스트 조건:
         LocalDate now=LocalDate.now();
         EmpDto empDto=new EmpDto();
-        empDto.setEno(8002);
+        empDto.setEno((long)8002);
         empDto.setEname("홍길동");
         empDto.setJob("부장");
-        empDto.setManager(8000);
+        empDto.setManager((long)8000);
         empDto.setHiredate(now);
-        empDto.setSalary(5000);
-        empDto.setCommission(1000);
-        empDto.setDno(20);
+        empDto.setSalary((long)5000);
+        empDto.setCommission((long)1000);
+        empDto.setDno((long)20);
 //		2) 실제 메소드실행
         empService.save(empDto);
 //		3) 검증(확인): 로그 , DB 확인, assert~ (DB확인)
@@ -87,14 +87,14 @@ class EmpServiceTest {
     void update2() {
 //		1) 테스트 조건:
         EmpDto empDto=new EmpDto();
-        empDto.setEno(8002);
+        empDto.setEno((long)8002);
         empDto.setEname("홍길동");
         empDto.setJob("부장");
-        empDto.setManager(8000);
+        empDto.setManager((long)8000);
         empDto.setHiredate(LocalDate.now());
-        empDto.setSalary(5000);
-        empDto.setCommission(1000);
-        empDto.setDno(20);
+        empDto.setSalary((long)5000);
+        empDto.setCommission((long)1000);
+        empDto.setDno((long)20);
 //		2) 실제 메소드실행
         empService.updateFromDto(empDto);
 //		3) 검증(확인): 로그 , DB 확인, assert~ (DB확인)
@@ -126,6 +126,7 @@ class EmpServiceTest {
         log.info(empStatsDto);
     }
 
+    @Transactional
     @Test
     void selectAll() {
 //        1) 테스트 조건(given):

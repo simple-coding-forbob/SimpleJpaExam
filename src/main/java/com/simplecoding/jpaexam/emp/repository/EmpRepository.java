@@ -16,20 +16,20 @@ import org.springframework.stereotype.Repository;
 public interface EmpRepository extends JpaRepository<Emp,Long> {
 
     //    TODO: 2) commission(상여금 컬럼) 이 null 이고 salary >= 1000(임의의 값) 인 값을 조회하세요
-//       단, sum(Long), avg(Double), max(Integer), min(Integer)
     @Query(value = "select e from Emp e\n" +
             "where e.commission is null\n" +
             "and   e.salary >= :salary")
     Page<Emp> selectSalary(@Param("salary") long salary,Pageable pageable);
 
     //    TODO: 3) salary(급여)를 sum, avg, max, min 값을 화면에 표시하세요
-    @Query(value = "select new com.simplecoding.jpaexam.emp.dto.EmpStatsDto(sum(e.salary),avg(e.salary),max(e.salary),min(e.salary))\n" +
+    //       단, sum(Long), avg(Double), max(Long), min(Long)
+    @Query(value = "select new com.simplecoding.jpaexam.emp.dto.EmpStatsDto(sum(e.salary),round(avg(e.salary)),max(e.salary),min(e.salary))\n" +
             "from Emp e")
     EmpStatsDto selectGroup();
 
-    //    TODO: 예제) like 검색: (lazy(지연 기능)기능의 단점) N+1 문제 => join fetch 사용
-    @EntityGraph(attributePaths = {"dept"})
-    @Query("select e from Emp e where e.ename like %:searchKeyword%")
+    //    TODO: 예제) like 검색: (lazy(지연 기능)기능의 단점) 문제) N+1 발생 -> 해결: 조인으로 유도(@EntityGraph)
+//    @EntityGraph(attributePaths = {"dept"})
+    @Query(value = "select e from Emp e where e.ename like %:searchKeyword%")
     Page<Emp> selectAll(
             @Param("searchKeyword") String searchKeyword,
             Pageable pageable

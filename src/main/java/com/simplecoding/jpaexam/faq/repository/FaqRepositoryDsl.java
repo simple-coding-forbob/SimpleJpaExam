@@ -1,4 +1,4 @@
-package com.simplecoding.jpaexam.dept.repository;
+package com.simplecoding.jpaexam.faq.repository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class DeptRepositoryDsl {
+public class FaqRepositoryDsl {
 
     //    (참고) queryDsl 사용: 원래는 파일 분리하지만, 간단히 사용법만 소개하기 위해 서비스에서 사용합니다.
     private final JPAQueryFactory queryFactory;
@@ -66,7 +66,7 @@ public class DeptRepositoryDsl {
 
     //    TODO: 3) dname 또는 loc 파라미터가 있으면 해당 조건만 검색
     //           둘 다 없으면 전체 조회(다이나믹 쿼리)
-    public Page<Dept> queryByDnameOrLoc(String dname, String loc, Pageable pageable) {
+    public PageImpl<Dept> queryByDnameOrLoc(String dname, String loc, Pageable pageable) {
 
         BooleanBuilder builder = new BooleanBuilder();
 

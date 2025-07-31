@@ -124,7 +124,7 @@ class DeptServiceTest {
         String loc="CHICAGO";
         Pageable pageable = PageRequest.of(0,3);
 //        2) 실제 메소드실행(when):
-        Page<DeptDto> page = deptService.selectByDnameAndLoc(dname, loc, pageable);
+        Page<DeptDto> page = deptService.queryByDnameAndLoc(dname, loc, pageable);
 //        3) 검증(then): 로그 , DB 확인, assert~ (DB확인)
         log.info("테스트 : "+page.getContent());  // page 클래스의 content 에 dept 객체가 있습니다.
     }

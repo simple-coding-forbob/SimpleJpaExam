@@ -36,6 +36,12 @@ public class EmpService {
         return list.stream().map(emp->mapStruct.toDto(emp)).toList();
     }
 
+    //    TODO: (2) 전체조회: findAll()
+    public List<Emp> findAll2() {
+        List<Emp> list= empRepository.findAll();
+        return list;
+    }
+
     //    TODO: (3) 전체조회: findAll(Pageable pageable)
     public Page<EmpDto> findAll(Pageable pageable) {
         Page<Emp> page= empRepository.findAll(pageable);
@@ -77,6 +83,7 @@ public class EmpService {
     public EmpStatsDto selectGroup() {
         return empRepository.selectGroup();
     }
+
     //  TODO: (3)
     public Page<EmpDto> selectAll(String searchKeyword, Pageable pageable) {
         Page<Emp>  page= empRepository.selectAll(searchKeyword, pageable);
